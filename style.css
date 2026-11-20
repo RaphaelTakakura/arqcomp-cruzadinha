@@ -1,0 +1,346 @@
+/* ==========================================================================
+       1. DESIGN TOKENS & VARIÁVEIS DE TEMA (NYT EDITORIAL + CYBER COMPUTING)
+       ========================================================================== */
+    :root {
+      --bg-void: #09090b;
+      --bg-surface: #13111c;
+      --bg-elevated: #1c1829;
+      --bg-blocked: #050507;
+
+      --border-subtle: #3b1d5e;
+      --border-strong: #7e22ce;
+
+      --neon-green: #00ff66;
+      --neon-green-dim: rgba(0, 255, 102, 0.14);
+      --neon-purple: #a855f7;
+      --neon-purple-dim: rgba(168, 85, 247, 0.18);
+      --neon-cyan: #22d3ee;
+      --neon-amber: #f59e0b;
+      --neon-error: #ff2a6d;
+      --neon-error-dim: rgba(255, 42, 109, 0.16);
+
+      --text-primary: #f4f4f5;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+
+      --font-editorial: 'Libre Baskerville', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-sans: 'Inter', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-void);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      margin: 0;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(126, 34, 206, 0.12) 0%, transparent 55%),
+        linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+    }
+
+    .font-editorial {
+      font-family: var(--font-editorial);
+    }
+
+    .font-mono-tech {
+      font-family: var(--font-mono);
+    }
+
+    /* ==========================================================================
+       2. CABEÇALHO EDITORIAL E NAVEGAÇÃO POR ABAS
+       ========================================================================== */
+    .nyt-header {
+      background-color: rgba(9, 9, 11, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .tab-btn {
+      position: relative;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .tab-btn.active {
+      color: var(--neon-green);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: var(--neon-green);
+      box-shadow: 0 0 10px var(--neon-green);
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* ==========================================================================
+       3. BOTÕES DE AÇÃO
+       ========================================================================== */
+    .btn-cyber-primary {
+      background-color: var(--neon-green);
+      color: #050507;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.25);
+    }
+
+    .btn-cyber-primary:hover:not(:disabled) {
+      background-color: #33ff85;
+      box-shadow: 0 0 22px rgba(0, 255, 102, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-cyber-primary:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-cyber-secondary {
+      background-color: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cyber-secondary:hover:not(:disabled) {
+      border-color: var(--neon-purple);
+      background-color: rgba(168, 85, 247, 0.15);
+    }
+
+    .btn-cyber-secondary:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* ==========================================================================
+       4. ESTILOS DO TABULEIRO DE PALAVRAS CRUZADAS (ABA 1)
+       ========================================================================== */
+    .crossword-grid {
+      display: grid;
+      grid-template-columns: repeat(19, minmax(0, 1fr));
+      grid-template-rows: repeat(19, minmax(0, 1fr));
+      gap: 1.5px;
+      background-color: var(--border-subtle);
+      border: 2px solid var(--border-strong);
+      border-radius: 8px;
+      padding: 2px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(126, 34, 206, 0.2);
+      width: 100%;
+      max-width: 620px;
+      aspect-ratio: 1 / 1;
+      user-select: none;
+    }
+
+    .cw-cell {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      background-color: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .cw-cell.blocked {
+      background-color: var(--bg-blocked);
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(88, 28, 135, 0.08),
+        rgba(88, 28, 135, 0.08) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    }
+
+    .cw-number {
+      position: absolute;
+      top: 1px;
+      left: 2px;
+      font-family: var(--font-mono);
+      font-size: clamp(0.42rem, 0.9vw, 0.58rem);
+      font-weight: 700;
+      color: var(--neon-purple);
+      pointer-events: none;
+      line-height: 1;
+      z-index: 2;
+    }
+
+    .cw-input {
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      padding: 3px 0 0 0;
+      margin: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: clamp(0.68rem, 1.5vw, 1rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      caret-color: transparent;
+      cursor: pointer;
+    }
+
+    .cw-cell.word-highlight {
+      background-color: var(--neon-purple-dim);
+    }
+
+    .cw-cell.active-cell {
+      background-color: rgba(0, 255, 102, 0.22);
+      box-shadow: inset 0 0 0 2px var(--neon-green);
+    }
+
+    .cw-cell.word-correct {
+      background-color: var(--neon-green-dim) !important;
+      box-shadow: inset 0 0 0 1.5px var(--neon-green);
+    }
+    .cw-cell.word-correct .cw-input {
+      color: var(--neon-green);
+      text-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+    }
+
+    .cw-cell.word-wrong {
+      background-color: var(--neon-error-dim) !important;
+      box-shadow: inset 0 0 0 1.5px var(--neon-error);
+    }
+    .cw-cell.word-wrong .cw-input {
+      color: #ff7aa2;
+    }
+
+    /* ==========================================================================
+       4B. LISTA DE DICAS
+       ========================================================================== */
+    .clue-item {
+      border-left: 3px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    .clue-item:hover {
+      background-color: rgba(168, 85, 247, 0.08);
+    }
+
+    .clue-item.active-clue {
+      background-color: var(--neon-purple-dim);
+      border-left-color: var(--neon-green);
+    }
+
+    .clue-item.clue-solved {
+      opacity: 0.75;
+    }
+    .clue-item.clue-solved .clue-text {
+      text-decoration: line-through;
+      color: var(--neon-green);
+    }
+
+    /* ==========================================================================
+       5. ESTILOS DO JOGO CONNECTIONS (ABA 2)
+       ========================================================================== */
+    .conn-tile {
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-size: clamp(0.62rem, 1.35vw, 0.88rem);
+      transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      user-select: none;
+      touch-action: manipulation;
+      word-break: keep-all;
+      overflow-wrap: normal;
+    }
+
+    .conn-tile:hover {
+      border-color: var(--neon-purple);
+      background-color: var(--bg-elevated);
+    }
+
+    .conn-tile.selected {
+      background-color: var(--neon-green);
+      border-color: var(--neon-green);
+      color: #050507;
+      box-shadow: 0 0 18px rgba(0, 255, 102, 0.45);
+      transform: translateY(-2px);
+    }
+
+    @keyframes shakeTile {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    .conn-tile.shake-error {
+      animation: shakeTile 0.42s ease-in-out;
+      border-color: var(--neon-error) !important;
+      background-color: var(--neon-error-dim) !important;
+      color: #ff85ad !important;
+      box-shadow: 0 0 16px rgba(255, 42, 109, 0.4) !important;
+    }
+
+    @keyframes popCategory {
+      0% { opacity: 0; transform: scale(0.96) translateY(-6px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .conn-solved-banner {
+      animation: popCategory 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .mistake-dot {
+      transition: all 0.25s ease;
+    }
+
+    .mistake-dot.active {
+      background-color: var(--neon-green);
+      box-shadow: 0 0 10px var(--neon-green);
+    }
+
+    .mistake-dot.spent {
+      background-color: #27272a;
+      border: 1px solid #3f3f46;
+      transform: scale(0.82);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-void);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--neon-purple);
+    }

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arq-Comp-Time — Atividade Avaliativa 3</title>
+
+  <!-- Tailwind CSS para utilitários de layout e responsividade -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fontes: Editorial (Libre Baskerville) + Técnica (JetBrains Mono) + UI (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- ========================================================================
+       CABEÇALHO EDITORIAL + NAVEGAÇÃO POR ABAS
+       ======================================================================== -->
+  <header class="nyt-header sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between py-4 border-b border-purple-950/60 gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-purple-950/80 border border-purple-500/50 flex items-center justify-center shadow-[0_0_12px_rgba(168,85,247,0.3)]">
+            <span class="font-mono-tech font-bold text-[#00ff66] text-lg">&gt;_</span>
+          </div>
+          <div>
+            <h1 class="font-editorial text-xl sm:text-2xl font-bold tracking-tight text-white">
+              Arq-Comp-<span class="text-purple-400">Time</span>
+              <span class="font-mono-tech text-xs uppercase tracking-widest text-[#00ff66] ml-1 align-middle px-2 py-0.5 rounded bg-[#00ff66]/10 border border-[#00ff66]/30">Games</span>
+            </h1>
+          </div>
+        </div>
+
+        <div class="font-mono-tech text-xs text-zinc-400 flex items-center gap-3">
+          <span id="edition-date">ATIVIDADE AVALIATIVA 3 • ARQUITETURA COMPUTACIONAL</span>
+          <span class="hidden sm:inline text-purple-700">|</span>
+          <span class="text-[#00ff66]">SYS.READY</span>
+        </div>
+      </div>
+
+      <!-- Navegação de Abas -->
+      <nav class="flex items-center gap-6 sm:gap-8 pt-1" aria-label="Navegação de Jogos">
+        <button
+          id="tab-btn-crossword"
+          data-tab="crossword"
+          class="tab-btn active py-3 font-mono-tech text-xs sm:text-sm font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer"
+        >
+          <span class="w-2 h-2 rounded-full bg-[#00ff66] shadow-[0_0_8px_#00ff66]"></span>
+          01. Palavras Cruzadas
+        </button>
+
+        <button
+          id="tab-btn-connections"
+          data-tab="connections"
+          class="tab-btn py-3 font-mono-tech text-xs sm:text-sm font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer"
+        >
+          <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+          02. Connections
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       CONTEÚDO PRINCIPAL
+       ======================================================================== -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+    <!-- ======================================================================
+         ABA 1: PALAVRAS CRUZADAS
+         ====================================================================== -->
+    <section id="panel-crossword" class="space-y-6">
+
+      <!-- Barra de Status & Controles -->
+      <div class="bg-[#13111c] border border-purple-900/70 rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg">
+        <div class="flex flex-wrap items-center gap-4">
+          <div class="bg-[#09090b] border border-purple-800/80 rounded-lg px-4 py-2 flex items-center gap-3">
+            <span class="font-mono-tech text-xs uppercase tracking-wider text-zinc-400">Acertos:</span>
+            <span id="score-counter" class="font-mono-tech text-base sm:text-lg font-bold text-[#00ff66]">
+              0 / 16
+            </span>
+          </div>
+
+          <div class="text-xs sm:text-sm text-zinc-300 font-mono-tech">
+            <span class="text-purple-400 font-bold" id="active-clue-badge">[1V]</span>
+            <span id="active-clue-preview" class="text-zinc-300 ml-1">Selecione uma casa para começar</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+          <button
+            id="btn-reset"
+            type="button"
+            class="btn-cyber-secondary px-4 py-2.5 rounded-lg text-xs sm:text-sm uppercase tracking-wider cursor-pointer flex items-center gap-2"
+            title="Limpar todo o tabuleiro"
+          >
+            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Reiniciar
+          </button>
+
+          <button
+            id="btn-check"
+            type="button"
+            class="btn-cyber-primary px-5 py-2.5 rounded-lg text-xs sm:text-sm uppercase tracking-wider cursor-pointer flex items-center gap-2"
+            title="Verificar palavras preenchidas"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+            </svg>
+            Conferir
+          </button>
+        </div>
+      </div>
+
+      <!-- Banner de Feedback da Cruzadinha -->
+      <div
+        id="feedback-banner"
+        class="hidden rounded-xl px-4 py-3 font-mono-tech text-xs sm:text-sm border transition-all duration-300 flex items-center justify-between"
+      >
+        <span id="feedback-message"></span>
+        <button id="close-feedback" class="text-xs opacity-70 hover:opacity-100 ml-4 cursor-pointer">[fechar]</button>
+      </div>
+
+      <!-- Área Principal: Tabuleiro à Esquerda + Dicas à Direita -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7 items-start">
+
+        <!-- Coluna do Tabuleiro -->
+        <div class="lg:col-span-7 flex flex-col items-center">
+          <div id="crossword-board" class="crossword-grid" role="grid" aria-label="Tabuleiro de Palavras Cruzadas">
+            <!-- Células geradas dinamicamente via JavaScript -->
+          </div>
+
+          <div class="mt-4 flex flex-wrap justify-center gap-4 text-[11px] font-mono-tech text-zinc-400">
+            <span><strong class="text-purple-400">CLIQUE:</strong> alterna H/V</span>
+            <span><strong class="text-purple-400">SETAS:</strong> navega</span>
+            <span><strong class="text-purple-400">BACKSPACE:</strong> apaga e volta</span>
+          </div>
+        </div>
+
+        <!-- Coluna das Dicas (Horizontais & Verticais) -->
+        <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
+          <div class="bg-[#13111c] border border-purple-900/60 rounded-xl p-4 sm:p-5">
+            <h2 class="font-editorial text-lg font-bold text-white border-b border-purple-900/60 pb-2 mb-3 flex items-center justify-between">
+              <span>Horizontais</span>
+              <span class="font-mono-tech text-xs font-normal text-purple-400">ACROSS →</span>
+            </h2>
+            <ul id="clues-across" class="space-y-1.5 max-h-64 overflow-y-auto pr-1">
+              <!-- Dicas horizontais geradas via JS -->
+            </ul>
+          </div>
+
+          <div class="bg-[#13111c] border border-purple-900/60 rounded-xl p-4 sm:p-5">
+            <h2 class="font-editorial text-lg font-bold text-white border-b border-purple-900/60 pb-2 mb-3 flex items-center justify-between">
+              <span>Verticais</span>
+              <span class="font-mono-tech text-xs font-normal text-[#00ff66]">DOWN ↓</span>
+            </h2>
+            <ul id="clues-down" class="space-y-1.5 max-h-64 overflow-y-auto pr-1">
+              <!-- Dicas verticais geradas via JS -->
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ABA 2: CONNECTIONS (AGRUPAMENTO DE COMPONENTES EM 4 CONEXÕES)
+         ====================================================================== -->
+    <section id="panel-connections" class="hidden space-y-6">
+
+      <!-- Cabeçalho Instrucional do Connections -->
+      <div class="bg-[#13111c] border border-purple-900/70 rounded-xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="font-mono-tech text-xs uppercase tracking-widest text-[#00ff66] bg-[#00ff66]/10 border border-[#00ff66]/30 px-2 py-0.5 rounded">
+              4 GRUPOS DE 4 COMPONENTES
+            </span>
+            <span class="font-mono-tech text-xs text-zinc-400">ARQUITETURA DE COMPUTADORES</span>
+          </div>
+          <p class="font-editorial text-base sm:text-lg text-white">
+            Agrupe os 16 componentes em <span class="text-purple-400 font-bold">4 conexões temáticas</span> com 4 elementos cada.
+          </p>
+        </div>
+
+        <!-- Indicador de Tentativas Restantes -->
+        <div class="bg-[#09090b] border border-purple-800/80 rounded-lg px-4 py-2.5 flex items-center gap-3 shrink-0">
+          <span class="font-mono-tech text-xs text-zinc-300">
+            Tentativas restantes: <strong id="conn-attempts-text" class="text-[#00ff66]">4 / 4</strong>
+          </span>
+          <div id="conn-mistakes-dots" class="flex items-center gap-1.5" aria-label="Tentativas restantes">
+            <span class="mistake-dot active w-3 h-3 rounded-full inline-block"></span>
+            <span class="mistake-dot active w-3 h-3 rounded-full inline-block"></span>
+            <span class="mistake-dot active w-3 h-3 rounded-full inline-block"></span>
+            <span class="mistake-dot active w-3 h-3 rounded-full inline-block"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Área Central Limitada para Leitura Perfeita da Grade 4x4 -->
+      <div class="max-w-3xl mx-auto space-y-4">
+
+        <!-- Banner de Status / Aviso Discreto ("Falta apenas 1!", Vitória, etc.) -->
+        <div
+          id="conn-toast-banner"
+          class="hidden rounded-xl px-4 py-3 font-mono-tech text-xs sm:text-sm border text-center transition-all duration-200"
+        >
+          <span id="conn-toast-message"></span>
+        </div>
+
+        <!-- Categorias Resolvidas Aparecem Aqui no Topo -->
+        <div id="conn-solved-container" class="space-y-3">
+          <!-- Banners coloridos das categorias resolvidas gerados via JS -->
+        </div>
+
+        <!-- Grade 4x4 dos Componentes Restantes -->
+        <div
+          id="conn-grid"
+          class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3"
+          role="group"
+          aria-label="Grade de componentes Connections"
+        >
+          <!-- 16 cartões clicáveis gerados via JS -->
+        </div>
+
+        <!-- Barra de Ações do Connections -->
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <button
+            id="btn-conn-shuffle"
+            type="button"
+            class="btn-cyber-secondary px-4 py-2.5 rounded-lg text-xs sm:text-sm uppercase tracking-wider cursor-pointer flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Embaralhar
+          </button>
+
+          <button
+            id="btn-conn-deselect"
+            type="button"
+            class="btn-cyber-secondary px-4 py-2.5 rounded-lg text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            disabled
+          >
+            Desmarcar
+          </button>
+
+          <button
+            id="btn-conn-submit"
+            type="button"
+            class="btn-cyber-primary px-6 py-2.5 rounded-lg text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            disabled
+          >
+            Conferir (<span id="conn-selected-count">0</span> sel.)
+          </button>
+
+          <button
+            id="btn-conn-reset"
+            type="button"
+            class="btn-cyber-secondary px-4 py-2.5 rounded-lg text-xs sm:text-sm uppercase tracking-wider cursor-pointer border-purple-500/60 text-purple-300"
+          >
+            Reiniciar
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       RODAPÉ MINIMALISTA
+       ======================================================================== -->
+  <footer class="border-t border-purple-950/60 py-4 mt-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between text-xs font-mono-tech text-zinc-500 gap-2">
+      <span>ARQ-COMP-TIME // ATIVIDADE AVALIATIVA 3</span>
+      <span>ARQUITETURA COMPUTACIONAL • HTML5 • CSS3 • JS</span>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       LÓGICA MODULAR EM JAVASCRIPT PURO
+       ======================================================================== -->
+  <script src="script.js"></script>
+</body>
+</html>
