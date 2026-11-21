@@ -14,7 +14,7 @@
           direction: 'down',
           answer: 'DMA',
           row: 6,
-          col: 8,
+          col: 9,
           clue: 'Um controlador copia dados entre dispositivo e RAM sem a CPU mover cada byte.'
         },
         {
@@ -23,7 +23,7 @@
           direction: 'down',
           answer: 'ADDRESSBUS',
           row: 3,
-          col: 14,
+          col: 15,
           clue: 'Especifica o endereço exato onde os dados estão armazenados ou para onde precisam ser enviados.'
         },
         {
@@ -32,7 +32,7 @@
           direction: 'across',
           answer: 'EEPROM',
           row: 6,
-          col: 11,
+          col: 12,
           clue: 'Memória não volátil pequena que guarda dados que sobrevivem ao desligamento.'
         },
         {
@@ -41,7 +41,7 @@
           direction: 'across',
           answer: 'MICROCONTROLADOR',
           row: 4,
-          col: 1,
+          col: 2,
           clue: 'Chip com CPU, memória e entrada e saída juntos.'
         },
         {
@@ -50,7 +50,7 @@
           direction: 'down',
           answer: 'CACHE',
           row: 4,
-          col: 3,
+          col: 4,
           clue: 'Memória pequena e rápida que contém dados usados recentemente pela CPU.'
         },
         {
@@ -59,7 +59,7 @@
           direction: 'down',
           answer: 'ROM',
           row: 4,
-          col: 16,
+          col: 17,
           clue: 'Memória não volátil de leitura que guarda o necessário para o equipamento funcionar.'
         },
         {
@@ -67,8 +67,8 @@
           number: 7,
           direction: 'across',
           answer: 'ULA',
-          row: 5,
-          col: 1,
+          row: 16,
+          col: 6,
           clue: 'Componente responsável por realizar as operações lógicas e que envolvem cálculo.'
         },
         {
@@ -77,7 +77,7 @@
           direction: 'down',
           answer: 'DUALCORE',
           row: 8,
-          col: 9,
+          col: 10,
           clue: 'Nome dado a uma CPU com dois núcleos independentes.'
         },
         {
@@ -86,7 +86,7 @@
           direction: 'across',
           answer: 'MEMORIADEMASSA',
           row: 8,
-          col: 2,
+          col: 3,
           clue: 'Armazenamento não volátil, guarda dados que persistem ao desligar o PC.'
         },
         {
@@ -94,17 +94,17 @@
           number: 10,
           direction: 'down',
           answer: 'DATABUS',
-          row: 7,
-          col: 12,
+          row: 11,
+          col: 6,
           clue: 'Transfere dados entre componentes dentro de um computador.'
         },
         {
-          id: '11-down',
+          id: '11-across',
           number: 11,
-          direction: 'down',
+          direction: 'across',
           answer: 'FLASH',
           row: 11,
-          col: 7,
+          col: 9,
           clue: 'Utiliza a mesma tecnologia que o pendrive e guarda o programa do Arduíno.'
         },
         {
@@ -113,7 +113,7 @@
           direction: 'down',
           answer: 'QUADCORE',
           row: 7,
-          col: 0,
+          col: 1,
           clue: 'Nome dado a uma CPU com quatro núcleos independentes.'
         },
         {
@@ -122,7 +122,7 @@
           direction: 'across',
           answer: 'REGISTRADORES',
           row: 13,
-          col: 0,
+          col: 1,
           clue: 'Pequenas e rápidas memórias que guardam dados temporários.'
         },
         {
@@ -131,7 +131,7 @@
           direction: 'across',
           answer: 'CPU',
           row: 11,
-          col: 0,
+          col: 1,
           clue: 'Parte responsável por buscar e executar instruções.'
         },
         {
@@ -140,16 +140,16 @@
           direction: 'down',
           answer: 'UC',
           row: 3,
-          col: 6,
+          col: 7,
           clue: 'Componente responsável por coordenar as operações dentro do processador.'
         },
         {
-          id: '16-across',
+          id: '16-down',
           number: 16,
-          direction: 'across',
+          direction: 'down',
           answer: 'RAM',
-          row: 14,
-          col: 9,
+          row: 2,
+          col: 2,
           clue: 'Memória volátil que guarda programas que estão rodando e dados que eles usam.'
         }
       ]
