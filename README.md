@@ -1,4 +1,4 @@
-DISCLAIMER: Esse projeto foi feito majoritariamente com inteligência artificial para fins didáticos (revisão de conteúdo técnico conceitual).
+Esse projeto foi feito majoritariamente com inteligência artificial para fins didáticos (revisão de conteúdo técnico conceitual).
 
 # Arq-Comp-Time Games
 
